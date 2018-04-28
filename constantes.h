@@ -3,4 +3,10 @@
 
 #define HEIGHT 25
 #define WIDTH 80
+#define MAX_INIMIGOS 5
+#define DARDOS_INICIAL 5
+#define PONTOS_INICIAL 0
+#define VIDAS_INICIAL 3
+#define SAIDA_OCULTA 0
+#define SAIDA_LIBERADA 1
 #endif // CONSTANTES_H
