@@ -34,7 +34,7 @@ extern "C" {
 
 // Declaramos una estructura text_info para almacenar la información
 // sobre la ventana actual.
-text_info vActual = {0, 0, 79, 24, WHITE, WHITE, C80, 25, 80, 1, 1};
+text_info vActual = {0, 0, 100, 30, WHITE, WHITE, C80, 25, 80, 1, 1};
 
 // Reads a string from the console.
 // cgets reads a string of characters from the console, storing the string
@@ -341,8 +341,8 @@ void gotoxy(int x, int y)
       y < 0 || y > vActual.screenheight) return;
    vActual.curx = x;
    vActual.cury = y;
-   c.X = vActual.winleft + x;
-   c.Y = vActual.wintop + y;
+   c.X = vActual.winleft + x + 3;
+   c.Y = vActual.wintop + y + 1;
    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
 
