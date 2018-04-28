@@ -62,14 +62,14 @@ typedef enum {
    WHITE
 } COLORS;
 
-enum text_modes {  
+enum text_modes {
    LASTMODE=-1,
    BW40=0,
    C40,
    BW80,
    C80,
    MONO=7,
-   C4350=64 
+   C4350=64
 };
 
 #define _NOCURSOR      0
@@ -107,6 +107,7 @@ void normvideo(void);
 //outportb
 //outpw
 int putch(int c);
+int putchxy(int x, int y, int c);
 int puttext(int left, int top, int right, int bottom, void *source);
 void _setcursortype(int cur_t);
 void textattr(int newattr);
