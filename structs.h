@@ -7,6 +7,7 @@ typedef struct {
     int x;      // Posição x do heroi
     int y;      // Posição y do heroi
     int direcao; //Direcao para qual ele esta correndo
+    int u_direcao; //Direcao anterior
     int dardos; // Quantidade de dardos disponiveis para o heroi
     int pontos; // Pontos do heroi
     int vidas;  // Vida restante pro heroi

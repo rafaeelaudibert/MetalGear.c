@@ -20,4 +20,6 @@
 
 #define CHAR_HEROI 79
 #define CHAR_ESPACO 32
+#define CHAR_TIRO_V 179
+#define CHAR_TIRO_H 196
 #endif // CARACTERES_H

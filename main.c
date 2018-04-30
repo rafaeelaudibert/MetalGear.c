@@ -12,7 +12,7 @@ int main()
     /* INICIALIZAÇÃO DOS VALORES PRINCIPAIS */
 
     //Inicialização do herói
-    HEROI heroi = {NULL, NULL, PARADO, DARDOS_INICIAL, PONTOS_INICIAL, VIDAS_INICIAL, 0};
+    HEROI heroi = {NULL, NULL, PARADO, DIREITA, DARDOS_INICIAL, PONTOS_INICIAL, VIDAS_INICIAL, 0}; //Atira para direita no inicio do jogo
 
     //Inicialização dos inimigos
     INIMIGOS inimigos;
