@@ -47,7 +47,12 @@ void printaParedes(char mapa[HEIGHT][WIDTH])
     for(i=0; i<HEIGHT; i++)
         for(j=0; j<WIDTH; j++)
             if (mapa[i][j] == '#')
-                putchxy(j, i, '#');
+                putchxy(j, i, CHAR_PAREDE);
+            else if (mapa[i][j] == '0')
+                putchxy(j, i, CHAR_REFEM);
+            else if (mapa[i][j] == '%')
+                putchxy(j, i, CHAR_BONUS);
+
 
     return;
 

@@ -22,4 +22,7 @@
 #define CHAR_ESPACO 32
 #define CHAR_TIRO_V 179
 #define CHAR_TIRO_H 196
+#define CHAR_PAREDE 219
+#define CHAR_REFEM 245
+#define CHAR_BONUS 37
 #endif // CARACTERES_H

@@ -26,12 +26,28 @@ void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
         break;
     }
 
+    colisaoPontos(heroi, mapa);
     heroi->direcao = PARADO; //Reseta a direcao do heroi, já que já usamos a anterior
     heroi->ciclos = CICLOS_HEROI; //Coloca seus ciclos de volta no maximo, para dar o tempo certo da sua movimentação
 
     putchxy(heroi->x, heroi->y, CHAR_HEROI); //Printa o heroi na sua nova posição
 
     return;
+}
+
+void colisaoPontos(HEROI* heroi, char mapa[HEIGHT][WIDTH]){
+
+    //Colisão com o Refém
+    if(mapa[heroi->y][heroi->x] == '0'){
+        mapa[heroi->y][heroi->x] = ' ';
+        heroi->pontos+=100;
+    }
+
+    //Colisão com o Bonus de tiros
+    if(mapa[heroi->y][heroi->x] == '%'){
+        mapa[heroi->y][heroi->x] = ' ';
+        heroi->dardos+=2;
+    }
 }
 
 void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH]){
