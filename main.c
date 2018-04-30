@@ -4,7 +4,7 @@ int main()
 {
 
     setlocale(LC_ALL, "portuguese"); //Coloca o local como portugues
-    _setcursortype(0); //Deixa o cursor invisivel
+    _setcursortype(_NOCURSOR); //Deixa o cursor invisivel
     system("mode 100,50"); //Seta o tamanho da tela
 
     char mapa[HEIGHT][WIDTH]; // Mapa

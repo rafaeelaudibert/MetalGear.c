@@ -23,4 +23,8 @@
 #define CHAR_PAREDE 219
 #define CHAR_REFEM 245
 #define CHAR_BONUS 37
+#define CHAR_INIMIGO_C 94
+#define CHAR_INIMIGO_B 118
+#define CHAR_INIMIGO_E 60
+#define CHAR_INIMIGO_D 62
 #endif // CARACTERES_H
