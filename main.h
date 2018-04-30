@@ -9,6 +9,10 @@
 #include "mapa.h"
 #include "game.h"
 #include "movimentacao.h"
+#include "auxiliars.h"
+
+#ifndef ENUMS_H
+#define ENUMS_H
 
 typedef enum {
     PARADO = 0,
@@ -17,5 +21,8 @@ typedef enum {
     BAIXO,
     DIREITA
 } DIRECOES;
+
+#endif // ENUMS_H
+
 
 
