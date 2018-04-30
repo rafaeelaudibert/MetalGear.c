@@ -1,6 +1,6 @@
 #include "main.h"
 
-void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
+int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida)
 {
     putchxy(heroi->x, heroi->y, CHAR_ESPACO); //Apaga a posição atual
 
@@ -26,16 +26,16 @@ void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
         break;
     }
 
-    colisaoPontos(heroi, mapa);
+    colisaoPontos(heroi, mapa, chave, saida);
     heroi->direcao = PARADO; //Reseta a direcao do heroi, já que já usamos a anterior
     heroi->ciclos = CICLOS_HEROI; //Coloca seus ciclos de volta no maximo, para dar o tempo certo da sua movimentação
 
     putchxy(heroi->x, heroi->y, CHAR_HEROI); //Printa o heroi na sua nova posição
 
-    return;
+    return checaVitoria(heroi, saida); //Retorna se ganhou ou não
 }
 
-void colisaoPontos(HEROI* heroi, char mapa[HEIGHT][WIDTH]){
+void colisaoPontos(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida){
 
     //Colisão com o Refém
     if(mapa[heroi->y][heroi->x] == '0'){
@@ -47,6 +47,14 @@ void colisaoPontos(HEROI* heroi, char mapa[HEIGHT][WIDTH]){
     if(mapa[heroi->y][heroi->x] == '%'){
         mapa[heroi->y][heroi->x] = ' ';
         heroi->dardos+=2;
+    }
+
+    //Colisão com a chave
+    if(mapa[heroi->y][heroi->x] == 'K'){
+        mapa[heroi->y][heroi->x] = ' ';
+        mapa[saida->y][saida->x] = ' ';
+        putchxy(saida->x, saida->y, ' ');
+        putchxy(heroi->x+1, heroi->y, ' '); //Apaga a ponta da chave
     }
 }
 
@@ -98,4 +106,8 @@ void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH]){
 
 
     return;
+}
+
+int checaVitoria(HEROI* heroi, SAIDA* saida){
+    return (heroi->x == saida->x && heroi->y == saida->y);
 }

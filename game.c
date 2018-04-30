@@ -20,7 +20,7 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
         }
 
         if(!heroi->ciclos){
-            moveHero(heroi, mapa);
+            gameOver = moveHero(heroi, mapa, chave, saida);
         } else {
             heroi->ciclos--;
         }

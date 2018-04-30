@@ -31,11 +31,15 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="conio/conio.c">
+		<Unit filename="conio.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="conio/conio.h" />
+		<Unit filename="conio.h" />
 		<Unit filename="constantes.h" />
+		<Unit filename="game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="game.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -44,6 +48,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="mapa.h" />
+		<Unit filename="movimentacao.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="movimentacao.h" />
 		<Unit filename="structs.h" />
 		<Extensions>
 			<code_completion />

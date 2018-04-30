@@ -46,12 +46,16 @@ void printaParedes(char mapa[HEIGHT][WIDTH])
     // Printa somente as paredes
     for(i=0; i<HEIGHT; i++)
         for(j=0; j<WIDTH; j++)
-            if (mapa[i][j] == '#')
+            if (mapa[i][j] == '#') //Parede
                 putchxy(j, i, CHAR_PAREDE);
-            else if (mapa[i][j] == '0')
+            else if (mapa[i][j] == '0') //Refem
                 putchxy(j, i, CHAR_REFEM);
-            else if (mapa[i][j] == '%')
+            else if (mapa[i][j] == '%') //Bonus
                 putchxy(j, i, CHAR_BONUS);
+            else if (mapa[i][j] == 'K'){ //Chave
+                putchxy(j, i, 'o');
+                printf("¬");
+            }
 
 
     return;
@@ -78,22 +82,22 @@ void decodificaMapa(int x, int y, char* c, HEROI* heroi, SAIDA* saida, INIMIGOS*
         if(!saida->x && !saida->y)
         {
             *c = '#';
-            saida->x = x;
-            saida->y = y;
+            saida->x = y;
+            saida->y = x;
         }
         break;
     case 'O': //Decodifica o heroi
         if (!heroi->x && !heroi->y)
         {
-            heroi->x = x;
-            heroi->y = y;
+            heroi->x = y;
+            heroi->y = x;
         }
         break;
     case 'K': //Chave
         if(!chave->x && !chave-y)
         {
-            chave->x = x;
-            chave->y = y;
+            chave->x = y;
+            chave->y = x;
         }
         break;
     }

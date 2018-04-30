@@ -19,7 +19,7 @@ int main()
     inimigos.qtde = 0; //Inicializa com 0 inimigos
 
     //Inicialização da saída
-    SAIDA saida = {NULL, NULL, SAIDA_OCULTA}; //Sem posição inicial, porém não ativa ainda
+    SAIDA saida = {NULL, NULL}; //Sem posição inicial
 
     //Inicialização da chave
     CHAVE chave = {NULL, NULL};

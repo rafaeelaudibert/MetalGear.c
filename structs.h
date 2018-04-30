@@ -40,7 +40,6 @@ typedef struct {
 typedef struct {
     int x;
     int y;
-    int ativo; // Só pode sair se a porta estiver ativada, ou seja, quando pegar a chave
 } SAIDA;
 
 typedef struct {
