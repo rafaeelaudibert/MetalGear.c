@@ -104,12 +104,13 @@ void decodeKey(char key, HEROI* heroi, TIRO* tiro)
         heroi->u_direcao = DIREITA;
         break;
     case ' ':
-        if(!tiro->t_restante)  //Para impedir de "perder" o tiro anterior, ou extender sua duração
+        if(!tiro->t_restante && heroi->dardos)  //Para impedir de extender duracao do tiro ou de atirar quando nao tem mais dardos
         {
             tiro->direcao = heroi->u_direcao;
             tiro->x = heroi->x;
             tiro->y = heroi->y;
             tiro->t_restante = DURACAO_TIRO;
+            heroi->dardos--;
         }
         break;
     case 'P':
