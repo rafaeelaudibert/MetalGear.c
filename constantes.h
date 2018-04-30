@@ -9,4 +9,15 @@
 #define VIDAS_INICIAL 3
 #define SAIDA_OCULTA 0
 #define SAIDA_LIBERADA 1
+#define DURACAO_TIRO 12
+#define CICLOS_HEROI 4
+#define CICLOS_INIMIGO 4
+#define FPS 30
 #endif // CONSTANTES_H
+
+#ifndef CARACTERES_H
+#define CARACTERES_H
+
+#define CHAR_HEROI 79
+#define CHAR_ESPACO 32
+#endif // CARACTERES_H

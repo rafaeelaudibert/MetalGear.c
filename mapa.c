@@ -31,12 +31,10 @@ int leMapa(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* inimi
                 decodificaMapa(i, j, &str[j], heroi, saida, inimigos, chave);
                 mapa[i][j] = str[j];
             }
-
             i++;
         }
     }
     fclose(arq);
-
     return 1;
 }
 
