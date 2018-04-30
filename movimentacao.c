@@ -2,7 +2,7 @@
 
 void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
 {
-    putchxy(heroi->y, heroi->x, CHAR_ESPACO); //Apaga a posição atual
+    putchxy(heroi->x, heroi->y, CHAR_ESPACO); //Apaga a posição atual
 
     switch(heroi->direcao)
     {
@@ -29,7 +29,7 @@ void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
     heroi->direcao = PARADO; //Reseta a direcao do heroi, já que já usamos a anterior
     heroi->ciclos = CICLOS_HEROI; //Coloca seus ciclos de volta no maximo, para dar o tempo certo da sua movimentação
 
-    putchxy(heroi->y, heroi->x, CHAR_HEROI); //Printa o heroi na sua nova posição
+    putchxy(heroi->x, heroi->y, CHAR_HEROI); //Printa o heroi na sua nova posição
 
     return;
 }
@@ -37,7 +37,7 @@ void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
 void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH]){
 
     if(tiro->t_restante != 12){
-        putchxy(tiro->y, tiro->x, CHAR_ESPACO); //Apaga a posicao atual do tiro, apenas se não é a primeira vez que ele é desenhado
+        putchxy(tiro->x, tiro->y, CHAR_ESPACO); //Apaga a posicao atual do tiro, apenas se não é a primeira vez que ele é desenhado
     }
     tiro->t_restante--; //Move o tiro uma posicao pra frente
 
@@ -75,9 +75,9 @@ void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH]){
     //Printa a posicao atual do tiro
     if(tiro->t_restante){
         if(tiro->direcao == CIMA || tiro->direcao == BAIXO)
-            putchxy(tiro->y, tiro->x, CHAR_TIRO_V);
+            putchxy(tiro->x, tiro->y, CHAR_TIRO_V);
         else
-            putchxy(tiro->y, tiro->x, CHAR_TIRO_H);
+            putchxy(tiro->x, tiro->y, CHAR_TIRO_H);
     }
 
 

@@ -501,7 +501,7 @@ int putch(int c)
 
 int putchxy(int x, int y, int c){
 
-    gotoxy(y, x); //Preciso inverter, não sei porque
+    gotoxy(x, y); //Preciso inverter, não sei porque
     putch(c);
 
     return 0;
