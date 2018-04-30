@@ -1,6 +1,0 @@
-Code::Blocks:
-
-Crie o projeto pelo codeblocks.
-Por questão de organização, crie uma pasta dentro da pasta do projeto e coloque a library dentro da pasta.
-No arquivo que você estiver colocando os headers apenas insira #include "conio/conio.h"
-Dessa maneira, você pode editar a Conio caso desejar

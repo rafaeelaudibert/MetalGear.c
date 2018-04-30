@@ -5,7 +5,7 @@
 #include <locale.h>
 #include "constantes.h"
 #include "structs.h"
-#include "conio/conio.h"
+#include "conio.h"
 #include "mapa.h"
 #include "game.h"
 #include "movimentacao.h"

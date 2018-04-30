@@ -1,0 +1,6 @@
+Code::Blocks:
+
+Crie o projeto pelo codeblocks.
+Coloque os arquivos "conio.c" e "conio.h" dentro da pasta do projeto
+No arquivo que você estiver colocando os headers apenas insira #include "conio.h"
+Dessa maneira, você pode editar a Conio.c, caso desejar
