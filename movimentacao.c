@@ -33,3 +33,53 @@ void moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH])
 
     return;
 }
+
+void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH]){
+
+    if(tiro->t_restante != 12){
+        putchxy(tiro->y, tiro->x, CHAR_ESPACO); //Apaga a posicao atual do tiro, apenas se não é a primeira vez que ele é desenhado
+    }
+    tiro->t_restante--; //Move o tiro uma posicao pra frente
+
+
+    switch(tiro->direcao)
+    {
+    case PARADO:
+        break;
+    case CIMA:
+        if (mapa[tiro->y-1][tiro->x] != '#' && mapa[tiro->y-1][tiro->x] != '0')
+            tiro->y--;
+        else
+            tiro->t_restante = 0; //Se acertou a parede ou refem, zera a distancia do tiro
+        break;
+    case BAIXO:
+        if (mapa[tiro->y+1][tiro->x] != '#' && mapa[tiro->y+1][tiro->x] != '0')
+            tiro->y++;
+        else
+            tiro->t_restante = 0; //Se acertou a parede ou refem, zera a distancia do tiro
+        break;
+    case ESQUERDA:
+        if (mapa[tiro->y][tiro->x-1] != '#' && mapa[tiro->y][tiro->x-1] != '0')
+            tiro->x--;
+        else
+            tiro->t_restante = 0; //Se acertou a parede ou refem, zera a distancia do tiro
+        break;
+    case DIREITA:
+        if (mapa[tiro->y][tiro->x+1] != '#' && mapa[tiro->y][tiro->x+1] != '0')
+            tiro->x++;
+        else
+            tiro->t_restante = 0; //Se acertou a parede ou refem, zera a distancia do tiro
+        break;
+    }
+
+    //Printa a posicao atual do tiro
+    if(tiro->t_restante){
+        if(tiro->direcao == CIMA || tiro->direcao == BAIXO)
+            putchxy(tiro->y, tiro->x, CHAR_TIRO_V);
+        else
+            putchxy(tiro->y, tiro->x, CHAR_TIRO_H);
+    }
+
+
+    return;
+}

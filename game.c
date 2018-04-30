@@ -3,7 +3,7 @@
 void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* inimigos, CHAVE chave)
 {
 
-    TIRO tiro = {NULL, NULL, 0}; // Inicialização do tiro
+    TIRO tiro = {NULL, NULL, PARADO, 0}; // Inicialização do tiro
     int gameOver = 0; //Flag do gameOver
 
 //LAÇO DO JOGO
@@ -13,6 +13,10 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
         if(kbhit())
         {
             decodeKey(detectKey(), heroi, &tiro); //Decodifica a tecla, e "traduz" o seu valor para informacoes relevantes
+        }
+
+        if(tiro.t_restante){ // Se tenho um tiro, movo ele
+            moveTiro(&tiro, mapa);
         }
 
         if(!heroi->ciclos){
@@ -85,19 +89,26 @@ void decodeKey(char key, HEROI* heroi, TIRO* tiro)
     {
     case 'W':
         heroi->direcao = CIMA;
+        heroi->u_direcao = CIMA;
         break;
     case 'A':
         heroi->direcao = ESQUERDA;
+        heroi->u_direcao = ESQUERDA;
         break;
     case 'S':
         heroi->direcao = BAIXO;
+        heroi->u_direcao = BAIXO;
         break;
     case 'D':
         heroi->direcao = DIREITA;
+        heroi->u_direcao = DIREITA;
         break;
     case ' ':
-        if(!tiro->t_restante)  //Para impedir de perder o tiro anterior, ou extender sua duração
+        if(!tiro->t_restante)  //Para impedir de "perder" o tiro anterior, ou extender sua duração
         {
+            tiro->direcao = heroi->u_direcao;
+            tiro->x = heroi->x;
+            tiro->y = heroi->y;
             tiro->t_restante = DURACAO_TIRO;
         }
         break;
