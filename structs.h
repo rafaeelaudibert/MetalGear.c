@@ -1,10 +1,12 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+
 //Heroi principal
 typedef struct {
     int x;      // Posição x do heroi
     int y;      // Posição y do heroi
+    int direcao; //Direcao para qual ele esta correndo
     int dardos; // Quantidade de dardos disponiveis para o heroi
     int pontos; // Pontos do heroi
     int vidas;  // Vida restante pro heroi
@@ -14,6 +16,7 @@ typedef struct {
 typedef struct{
     int x;
     int y;
+    int direcao;
     int t_restante;
 }TIRO;
 
