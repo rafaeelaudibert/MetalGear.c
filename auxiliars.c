@@ -23,6 +23,7 @@ void colisaoPontos(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* s
         mapa[heroi->y][heroi->x] = ' ';
         mapa[saida->y][saida->x] = ' ';
         putchxy(saida->x, saida->y, ' ');
-        putchxy(heroi->x+1, heroi->y, ' '); //Apaga a ponta da chave
+        if(mapa[heroi->y][heroi->x+1]!= '#')
+            putchxy(heroi->x+1, heroi->y, ' '); //Apaga a ponta da chave
     }
 }
