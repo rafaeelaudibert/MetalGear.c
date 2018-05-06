@@ -2,6 +2,7 @@
 
 int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida)
 {
+
     putchxy(heroi->x, heroi->y, CHAR_ESPACO); //Apaga a posição atual
 
     switch(heroi->direcao)
