@@ -72,8 +72,8 @@ void decodificaMapa(int x, int y, char* c, HEROI* heroi, SAIDA* saida, INIMIGOS*
         {
             inimigos->listaInimigos[inimigos->qtde].x = y;
             inimigos->listaInimigos[inimigos->qtde].y = x;
-            inimigos->listaInimigos[inimigos->qtde].direcao = PARADO;
-            inimigos->listaInimigos[inimigos->qtde].u_direcao = PARADO;
+            inimigos->listaInimigos[inimigos->qtde].direcao = DIREITA;
+            inimigos->listaInimigos[inimigos->qtde].u_direcao = DIREITA;
             inimigos->listaInimigos[inimigos->qtde].passos_restantes = 0;
             inimigos->listaInimigos[inimigos->qtde].t_sono = 0;
             inimigos->listaInimigos[inimigos->qtde].estado = 1;
