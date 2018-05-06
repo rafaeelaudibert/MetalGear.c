@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <Windows.h>
 #include <locale.h>
+#include <time.h>
 #include "constantes.h"
 #include "structs.h"
 #include "conio.h"
