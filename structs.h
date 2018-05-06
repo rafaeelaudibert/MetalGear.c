@@ -25,6 +25,8 @@ typedef struct{
 typedef struct {
     int x;
     int y;
+    int direcao;
+    int passos_restantes;
     int ciclos; // Ciclos até se movimentar novamente
     int estado; // 0 - Dormindo; 1 - Patrulhando;
     int t_sono; // Tempo que falta para dormir
