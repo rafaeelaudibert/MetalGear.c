@@ -5,6 +5,7 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
 
     TIRO tiro = {NULL, NULL, PARADO, 0}; // Inicialização do tiro
     int gameOver = 0; //Flag do gameOver
+    int i; //Contador dos laços
 
 //LAÇO DO JOGO
     while(!gameOver)
@@ -15,14 +16,35 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
             decodeKey(detectKey(), heroi, &tiro); //Decodifica a tecla, e "traduz" o seu valor para informacoes relevantes
         }
 
-        if(tiro.t_restante){ // Se tenho um tiro, movo ele
+        if(tiro.t_restante)  // Se tenho um tiro, movo ele
+        {
             moveTiro(&tiro, mapa);
         }
 
-        if(!heroi->ciclos){
+        if(!heroi->ciclos)
+        {
             gameOver = moveHero(heroi, mapa, chave, saida);
-        } else {
+        }
+        else
+        {
             heroi->ciclos--;
+        }
+
+        for(i=0; i<inimigos->qtde; i++)
+        {
+            if(!inimigos->listaInimigos[i].t_sono)   //Se o inimigo não estiver dormindo
+            {
+                if(!inimigos->listaInimigos[i].ciclos) //Se o inimigo precisa se mover agora
+                {
+                    moveInimigos(&inimigos->listaInimigos[i], mapa);
+                }
+                else
+                {
+                    inimigos->listaInimigos[i].ciclos--;
+                }
+            } else {
+                inimigos->listaInimigos[i].t_sono--;
+            }
         }
 
         //MoveEnemies

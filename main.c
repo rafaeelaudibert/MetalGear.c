@@ -4,6 +4,7 @@ int main()
 {
 
     setlocale(LC_ALL, "portuguese"); //Coloca o local como portugues
+    srand(time(NULL));  // Seta a seed do rand
     _setcursortype(_NOCURSOR); //Deixa o cursor invisivel
     system("mode 100,50"); //Seta o tamanho da tela
 
