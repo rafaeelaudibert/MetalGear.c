@@ -10,6 +10,7 @@
 #define DURACAO_TIRO 12
 #define CICLOS_HEROI 4
 #define CICLOS_INIMIGO 4
+#define CICLOS_SONO 200
 #define FPS 30
 #endif // CONSTANTES_H
 
@@ -27,4 +28,5 @@
 #define CHAR_INIMIGO_B 118
 #define CHAR_INIMIGO_E 60
 #define CHAR_INIMIGO_D 62
+#define CHAR_SONO 122
 #endif // CARACTERES_H

@@ -18,7 +18,7 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
 
         if(tiro.t_restante)  // Se tenho um tiro, movo ele
         {
-            moveTiro(&tiro, mapa);
+            moveTiro(&tiro, inimigos, mapa);
         }
 
         if(!heroi->ciclos)
@@ -32,18 +32,13 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
 
         for(i=0; i<inimigos->qtde; i++)
         {
-            if(!inimigos->listaInimigos[i].t_sono)   //Se o inimigo não estiver dormindo
+            if(!inimigos->listaInimigos[i].ciclos) //Se o inimigo precisa se mover agora
             {
-                if(!inimigos->listaInimigos[i].ciclos) //Se o inimigo precisa se mover agora
-                {
-                    moveInimigos(&inimigos->listaInimigos[i], mapa);
-                }
-                else
-                {
-                    inimigos->listaInimigos[i].ciclos--;
-                }
-            } else {
-                inimigos->listaInimigos[i].t_sono--;
+                moveInimigos(&inimigos->listaInimigos[i], mapa);
+            }
+            else
+            {
+                inimigos->listaInimigos[i].ciclos--;
             }
         }
 

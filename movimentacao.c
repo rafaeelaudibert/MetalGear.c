@@ -36,9 +36,10 @@ int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida)
     return checaVitoria(heroi, saida); //Retorna se ganhou ou não
 }
 
-void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH])
+void moveTiro(TIRO* tiro, INIMIGOS* inimigos, char mapa[HEIGHT][WIDTH])
 {
 
+    int i; // Variavel contadora
 
     if(tiro->t_restante != 12)
     {
@@ -77,6 +78,15 @@ void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH])
         break;
     }
 
+    for(i=0; i<inimigos->qtde; i++)  //Verifica se bala acertou inimigo
+    {
+        if(tiro->x == inimigos->listaInimigos[i].x && tiro->y == inimigos->listaInimigos[i].y)
+        {
+            inimigos->listaInimigos[i].t_sono = CICLOS_SONO;
+            tiro->t_restante = 0; // Se acertou o inimigo, zera a distancia do tiro
+            break; //Não precisa verificar os outros inimigos, apenas um deles
+        }
+    }
     //Printa a posicao atual do tiro
     if(tiro->t_restante)
     {
@@ -92,66 +102,76 @@ void moveTiro(TIRO* tiro, char mapa[HEIGHT][WIDTH])
 
 void moveInimigos(INIMIGO* inimigo, char mapa[HEIGHT][WIDTH])
 {
-    putchxy(inimigo->x, inimigo->y, CHAR_ESPACO); //Apaga a posição atual
 
-    if(!inimigo->passos_restantes) //Se o inimigo não tem mais passos para andar, gera uma nova direção
+    if(!inimigo->t_sono) //Se o inimigo não está dormindo
     {
-        if(inimigo->direcao != PARADO) // Se não estava parado, "lembra" da ultima direção andada
-            inimigo->u_direcao = inimigo->direcao;
-        inimigo->direcao = rand() % 5;                  // Escolhe uma das 5 possiveis direções
-        inimigo->passos_restantes = 2 + (rand() % 3);   // Anda entre 2 e 4 passos
-    }
+        putchxy(inimigo->x, inimigo->y, CHAR_ESPACO); //Apaga a posição atual
 
-    switch(inimigo->direcao) // Verifica para qual lado inimigo precisa se movimentar
-    {
-    case PARADO: // Caso esteja parado, vai printar pra ultima direção que estava virado
-        switch(inimigo->u_direcao)
+        if(!inimigo->passos_restantes) //Se o inimigo não tem mais passos para andar, gera uma nova direção
         {
+            if(inimigo->direcao != PARADO) // Se não estava parado, "lembra" da ultima direção andada
+                inimigo->u_direcao = inimigo->direcao;
+            inimigo->direcao = rand() % 5;                  // Escolhe uma das 5 possiveis direções
+            inimigo->passos_restantes = 2 + (rand() % 3);   // Anda entre 2 e 4 passos
+        }
+
+        switch(inimigo->direcao) // Verifica para qual lado inimigo precisa se movimentar
+        {
+        case PARADO: // Caso esteja parado, vai printar pra ultima direção que estava virado
+            switch(inimigo->u_direcao)
+            {
+            case CIMA:
+                putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_C); //Printa o heroi na sua nova posição
+                break;
+            case BAIXO:
+                putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_B); //Printa o heroi na sua nova posição
+                break;
+            case ESQUERDA:
+                putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_E); //Printa o heroi na sua nova posição
+                break;
+            case DIREITA:
+                putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_D); //Printa o heroi na sua nova posição
+                break;
+            }
+            break;
         case CIMA:
+            if (mapa[inimigo->y-1][inimigo->x] != '#' && mapa[inimigo->y-1][inimigo->x] != '0'&& mapa[inimigo->y-1][inimigo->x] != 'K') //Checa colisão
+                inimigo->y--;
+            else
+                inimigo->passos_restantes = 1; //Seto para 1, pois irei reduzir ao final do loop em 1, fazendo com que nao avance novamente
             putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_C); //Printa o heroi na sua nova posição
             break;
         case BAIXO:
-            putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_B); //Printa o heroi na sua nova posição
+            if (mapa[inimigo->y+1][inimigo->x] != '#' && mapa[inimigo->y+1][inimigo->x] != '0'&& mapa[inimigo->y+1][inimigo->x] != 'K')
+                inimigo->y++;
+            else
+                inimigo->passos_restantes = 1;
+            putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_B);
             break;
         case ESQUERDA:
-            putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_E); //Printa o heroi na sua nova posição
+            if (mapa[inimigo->y][inimigo->x-1] != '#' && mapa[inimigo->y][inimigo->x-1] != '0'&& mapa[inimigo->y][inimigo->x-1] != 'K')
+                inimigo->x--;
+            else
+                inimigo->passos_restantes = 1;
+            putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_E);
             break;
         case DIREITA:
-            putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_D); //Printa o heroi na sua nova posição
+            if (mapa[inimigo->y][inimigo->x+1] != '#' && mapa[inimigo->y][inimigo->x+1] != '0'&& mapa[inimigo->y][inimigo->x+1] != 'K')
+                inimigo->x++;
+            else
+                inimigo->passos_restantes = 1;
+            putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_D);
             break;
         }
-        break;
-    case CIMA:
-        if (mapa[inimigo->y-1][inimigo->x] != '#' && mapa[inimigo->y-1][inimigo->x] != '0'&& mapa[inimigo->y-1][inimigo->x] != 'K') //Checa colisão
-            inimigo->y--;
-        else
-            inimigo->passos_restantes = 1; //Seto para 1, pois irei reduzir ao final do loop em 1, fazendo com que nao avance novamente
-        putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_C); //Printa o heroi na sua nova posição
-        break;
-    case BAIXO:
-        if (mapa[inimigo->y+1][inimigo->x] != '#' && mapa[inimigo->y+1][inimigo->x] != '0'&& mapa[inimigo->y+1][inimigo->x] != 'K')
-            inimigo->y++;
-        else
-            inimigo->passos_restantes = 1;
-        putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_B);
-        break;
-    case ESQUERDA:
-        if (mapa[inimigo->y][inimigo->x-1] != '#' && mapa[inimigo->y][inimigo->x-1] != '0'&& mapa[inimigo->y][inimigo->x-1] != 'K')
-            inimigo->x--;
-        else
-            inimigo->passos_restantes = 1;
-        putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_E);
-        break;
-    case DIREITA:
-        if (mapa[inimigo->y][inimigo->x+1] != '#' && mapa[inimigo->y][inimigo->x+1] != '0'&& mapa[inimigo->y][inimigo->x+1] != 'K')
-            inimigo->x++;
-        else
-            inimigo->passos_restantes = 1;
-        putchxy(inimigo->x, inimigo->y, CHAR_INIMIGO_D);
-        break;
+
+        inimigo->passos_restantes--;
+    }
+    else     // Se inimigo estiver dormindo
+    {
+        putchxy(inimigo->x, inimigo->y, 'Z'); //Printa o caracter de sono
+        inimigo->t_sono-=4;
     }
 
-    inimigo->passos_restantes--;
     inimigo->ciclos = CICLOS_INIMIGO;
 
     return;
