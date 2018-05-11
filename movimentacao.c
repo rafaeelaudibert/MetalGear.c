@@ -2,7 +2,7 @@
 
 int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida)
 {
-    putchxy(heroi->x, heroi->y, CHAR_ESPACO); //Apaga a posição atual
+    visaoInimigo(APAGA, heroi->x, heroi->y, heroi->direcao == PARADO ? heroi->u_direcao : heroi->direcao, mapa);
 
     switch(heroi->direcao)
     {
@@ -29,6 +29,7 @@ int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida)
     colisaoPontos(heroi, mapa, chave, saida);
     heroi->direcao = PARADO; //Reseta a direcao do heroi, já que já usamos a anterior
     heroi->ciclos = CICLOS_HEROI; //Coloca seus ciclos de volta no maximo, para dar o tempo certo da sua movimentação
+
 
     putchxy(heroi->x, heroi->y, CHAR_HEROI); //Printa o heroi na sua nova posição
     return checaVitoria(heroi, saida); //Retorna se ganhou ou não
@@ -172,7 +173,7 @@ void moveInimigos(INIMIGO* inimigo, char mapa[HEIGHT][WIDTH])
         inimigo->t_sono-=4;
     }
 
-        inimigo->ciclos = CICLOS_INIMIGO;
+    inimigo->ciclos = CICLOS_INIMIGO;
 
     return;
 }
@@ -180,8 +181,9 @@ void moveInimigos(INIMIGO* inimigo, char mapa[HEIGHT][WIDTH])
 int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH])
 {
 
-    int avistado = 0; //Flag que retorna se viu o herói
+    int avistado = 0; //Flag que retorna se houve colisão do campo de visão com o herói
     int i, j; //Contadores
+    int paraInterno[3] = {0, 0, 0, 0}; //Flag para poder fazer campo de visão não atravessar a parede
 
     switch(direcao)
     {
@@ -190,10 +192,23 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=0; j<=3; j++)
             {
-                if (x-i >= 0 && y-j >= 0) //Garante que esteja dentro dos limites da matriz
-                    if ( !(i == 0 && j == 0) && mapa[y-j][x-i] != '#')
-                        if(mapa[y-j][x-i] != 'K' && mapa[y-j][x-i] != '0')
-                            putchxy(x-i, y-j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                if (x-i >= 0 && y-j >= 0)  //Garante que esteja dentro dos limites da matriz
+                {
+                    if( (i || j) && !paraInterno[i+1])
+                    {
+                        if (mapa[y-j][x-i] != '#')
+                        {
+                            if(mapa[y-j][x-i] != 'K' && mapa[y-j][x-i] != '0')
+                            {
+                                putchxy(x-i, y-j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                            }
+                        }
+                        else
+                        {
+                            paraInterno[i+1] = 1;
+                        }
+                    }
+                }
             }
         }
         break;
@@ -202,10 +217,21 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=0; j<=3; j++)
             {
-                if (x+i < WIDTH && y+j < HEIGHT) //Garante que esteja dentro dos limites da matriz
-                    if ( !(i == 0 && j == 0) && mapa[y+j][x+i] != '#')
-                        if(mapa[y+j][x+i] != 'K' && mapa[y+j][x+i] != '0')
-                            putchxy(x+i, y+j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                if (x+i < WIDTH && y+j < HEIGHT)  //Garante que esteja dentro dos limites da matriz
+                {
+                    if( (i || j) && !paraInterno[i+1])
+                    {
+                        if (mapa[y+j][x+i] != '#')
+                        {
+                            if(mapa[y+j][x+i] != 'K' && mapa[y+j][x+i] != '0')
+                                putchxy(x+i, y+j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                        }
+                        else
+                        {
+                            paraInterno[i+1] = 1;
+                        }
+                    }
+                }
             }
         }
         break;
@@ -214,10 +240,21 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=-1; j<=1; j++)
             {
-                if (x-i >= 0 && y-j >= 0) //Garante que esteja dentro dos limites da matriz
-                    if ( !(i == 0 && j == 0) && mapa[y-j][x-i] != '#')
-                        if(mapa[y-j][x-i] != 'K' && mapa[y-j][x-i] != '0')
-                            putchxy(x-i, y-j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                if (x-i >= 0 && y-j >= 0)  //Garante que esteja dentro dos limites da matriz
+                {
+                    if( (i || j) && !paraInterno[j+1])
+                    {
+                        if (mapa[y-j][x-i] != '#')
+                        {
+                            if(mapa[y-j][x-i] != 'K' && mapa[y-j][x-i] != '0')
+                                putchxy(x-i, y-j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                        }
+                        else
+                        {
+                            paraInterno[j+1] = 1;
+                        }
+                    }
+                }
             }
         }
         break;
@@ -226,10 +263,21 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=-1; j<=1; j++)
             {
-                if (x+i < WIDTH && y+j < HEIGHT) //Garante que esteja dentro dos limites da matriz
-                    if ( !(i == 0 && j == 0) && mapa[y+j][x+i] != '#')
-                        if(mapa[y+j][x+i] != 'K' && mapa[y+j][x+i] != '0')
-                            putchxy(x+i, y+j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                if (x+i < WIDTH && y+j < HEIGHT)  //Garante que esteja dentro dos limites da matriz
+                {
+                    if( (i || j) && !paraInterno[j+1])
+                    {
+                        if (mapa[y+j][x+i] != '#')
+                        {
+                            if(mapa[y+j][x+i] != 'K' && mapa[y+j][x+i] != '0')
+                                putchxy(x+i, y+j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                        }
+                        else
+                        {
+                            paraInterno[j+1] = 1;
+                        }
+                    }
+                }
             }
         }
         break;
