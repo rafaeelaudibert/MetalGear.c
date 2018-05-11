@@ -2,7 +2,7 @@
 
 int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida)
 {
-    visaoInimigo(APAGA, heroi->x, heroi->y, heroi->direcao == PARADO ? heroi->u_direcao : heroi->direcao, mapa);
+    putchxy(heroi->x, heroi->y, CHAR_ESPACO); //Apaga posicao atual do heroi
 
     switch(heroi->direcao)
     {
@@ -182,8 +182,8 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
 {
 
     int avistado = 0; //Flag que retorna se houve colisão do campo de visão com o herói
-    int i, j; //Contadores
-    int paraInterno[3] = {0, 0, 0, 0}; //Flag para poder fazer campo de visão não atravessar a parede
+    int i, j, offseti, offsetj; //Contadores
+    int visionCollision[3] = {0}; //Flag para poder fazer campo de visão não atravessar a parede
 
     switch(direcao)
     {
@@ -192,20 +192,22 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=0; j<=3; j++)
             {
-                if (x-i >= 0 && y-j >= 0)  //Garante que esteja dentro dos limites da matriz
+                offseti = x-i;
+                offsetj = y-j;
+                if (offseti >= 0 && offsetj >= 0)  //Garante que esteja dentro dos limites da matriz
                 {
-                    if( (i || j) && !paraInterno[i+1])
+                    if( (i || j) && !visionCollision[i+1])
                     {
-                        if (mapa[y-j][x-i] != '#')
+                        if (mapa[offsetj][offseti] != '#')
                         {
-                            if(mapa[y-j][x-i] != 'K' && mapa[y-j][x-i] != '0')
+                            if(mapa[offsetj][offseti] != 'K' && mapa[offsetj][offseti] != '0')
                             {
-                                putchxy(x-i, y-j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                                putchxy(offseti, offsetj, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
                             }
                         }
                         else
                         {
-                            paraInterno[i+1] = 1;
+                            visionCollision[i+1] = 1;
                         }
                     }
                 }
@@ -217,18 +219,20 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=0; j<=3; j++)
             {
-                if (x+i < WIDTH && y+j < HEIGHT)  //Garante que esteja dentro dos limites da matriz
+                offseti = x+i;
+                offsetj = y+j;
+                if (offseti < WIDTH && offsetj < HEIGHT)  //Garante que esteja dentro dos limites da matriz
                 {
-                    if( (i || j) && !paraInterno[i+1])
+                    if( (i || j) && !visionCollision[i+1])
                     {
-                        if (mapa[y+j][x+i] != '#')
+                        if (mapa[offsetj][offseti] != '#')
                         {
-                            if(mapa[y+j][x+i] != 'K' && mapa[y+j][x+i] != '0')
-                                putchxy(x+i, y+j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                            if(mapa[offsetj][offseti] != 'K' && mapa[offsetj][offseti] != '0')
+                                putchxy(offseti, offsetj, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
                         }
                         else
                         {
-                            paraInterno[i+1] = 1;
+                            visionCollision[i+1] = 1;
                         }
                     }
                 }
@@ -240,18 +244,20 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=-1; j<=1; j++)
             {
-                if (x-i >= 0 && y-j >= 0)  //Garante que esteja dentro dos limites da matriz
+                offseti = x-i;
+                offsetj = y-j;
+                if (offseti >= 0 && offsetj >= 0)  //Garante que esteja dentro dos limites da matriz
                 {
-                    if( (i || j) && !paraInterno[j+1])
+                    if( (i || j) && !visionCollision[j+1])
                     {
-                        if (mapa[y-j][x-i] != '#')
+                        if (mapa[offsetj][offseti] != '#')
                         {
-                            if(mapa[y-j][x-i] != 'K' && mapa[y-j][x-i] != '0')
-                                putchxy(x-i, y-j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                            if(mapa[offsetj][offseti] != 'K' && mapa[offsetj][offseti] != '0')
+                                putchxy(offseti, offsetj, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
                         }
                         else
                         {
-                            paraInterno[j+1] = 1;
+                            visionCollision[j+1] = 1;
                         }
                     }
                 }
@@ -263,18 +269,20 @@ int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]
         {
             for(j=-1; j<=1; j++)
             {
-                if (x+i < WIDTH && y+j < HEIGHT)  //Garante que esteja dentro dos limites da matriz
+                offseti = x+i;
+                offsetj = y+j;
+                if (offseti < WIDTH && offsetj < HEIGHT)  //Garante que esteja dentro dos limites da matriz
                 {
-                    if( (i || j) && !paraInterno[j+1])
+                    if( (i || j) && !visionCollision[j+1])
                     {
-                        if (mapa[y+j][x+i] != '#')
+                        if (mapa[offsetj][offseti] != '#')
                         {
-                            if(mapa[y+j][x+i] != 'K' && mapa[y+j][x+i] != '0')
-                                putchxy(x+i, y+j, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
+                            if(mapa[offsetj][offseti] != 'K' && mapa[offsetj][offseti] != '0')
+                                putchxy(offseti, offsetj, (status == MOSTRA ? CHAR_VISAO : CHAR_ESPACO)); //Operador ternario decide se apaga ou mostra o campo de visão
                         }
                         else
                         {
-                            paraInterno[j+1] = 1;
+                            visionCollision[j+1] = 1;
                         }
                     }
                 }
