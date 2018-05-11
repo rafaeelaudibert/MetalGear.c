@@ -21,15 +21,6 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
             moveTiro(&tiro, inimigos, mapa);
         }
 
-        if(!heroi->ciclos)
-        {
-            gameOver = moveHero(heroi, mapa, chave, saida);
-        }
-        else
-        {
-            heroi->ciclos--;
-        }
-
         for(i=0; i<inimigos->qtde; i++)
         {
             if(!inimigos->listaInimigos[i].ciclos) //Se o inimigo precisa se mover agora
@@ -41,6 +32,16 @@ void gameLoop(char mapa[HEIGHT][WIDTH], HEROI* heroi, SAIDA* saida, INIMIGOS* in
                 inimigos->listaInimigos[i].ciclos--;
             }
         }
+
+        if(!heroi->ciclos)
+        {
+            gameOver = moveHero(heroi, mapa, chave, saida);
+        }
+        else
+        {
+            heroi->ciclos--;
+        }
+
 
         //MoveEnemies
         //Detect key collision

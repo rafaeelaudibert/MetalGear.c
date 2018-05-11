@@ -3,4 +3,5 @@
 int moveHero(HEROI* heroi, char mapa[HEIGHT][WIDTH], CHAVE chave, SAIDA* saida);
 void moveTiro(TIRO* tiro, INIMIGOS* inimigos, char mapa[HEIGHT][WIDTH]);
 void moveInimigos(INIMIGO* inimigo, char mapa[HEIGHT][WIDTH]);
+int visaoInimigo(int status, int x, int y, int direcao, char mapa[HEIGHT][WIDTH]);
 #endif // MOVIMENTACAO_H

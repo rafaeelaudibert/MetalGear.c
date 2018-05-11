@@ -11,6 +11,8 @@
 #define CICLOS_HEROI 4
 #define CICLOS_INIMIGO 4
 #define CICLOS_SONO 200
+#define APAGA 0
+#define MOSTRA 1
 #define FPS 30
 #endif // CONSTANTES_H
 
@@ -29,4 +31,5 @@
 #define CHAR_INIMIGO_E 60
 #define CHAR_INIMIGO_D 62
 #define CHAR_SONO 122
+#define CHAR_VISAO 176
 #endif // CARACTERES_H
